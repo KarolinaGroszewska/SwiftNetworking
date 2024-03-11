@@ -7,18 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4AF1FD872B9E8879009DC958 /* SwiftNetworkingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FD862B9E8879009DC958 /* SwiftNetworkingApp.swift */; };
 		4AF1FD892B9E8879009DC958 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FD882B9E8879009DC958 /* ContentView.swift */; };
 		4AF1FD8B2B9E887A009DC958 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1FD8A2B9E887A009DC958 /* Assets.xcassets */; };
 		4AF1FD8E2B9E887A009DC958 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1FD8D2B9E887A009DC958 /* Preview Assets.xcassets */; };
+		4AF1FDA22B9E8B73009DC958 /* SwiftNetworkingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FDA12B9E8B73009DC958 /* SwiftNetworkingApp.swift */; };
+		4AF1FDA42B9E8CEA009DC958 /* CoinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FDA32B9E8CEA009DC958 /* CoinsViewModel.swift */; };
+		4AF1FDA72B9E9731009DC958 /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FDA62B9E9731009DC958 /* CoinDataService.swift */; };
+		4AF1FDA92B9E9A9F009DC958 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FDA82B9E9A9F009DC958 /* Coin.swift */; };
+		4AF1FDAB2B9EA197009DC958 /* CoinAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1FDAA2B9EA197009DC958 /* CoinAPIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4AF1FD832B9E8879009DC958 /* SwiftNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AF1FD862B9E8879009DC958 /* SwiftNetworkingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNetworkingApp.swift; sourceTree = "<group>"; };
 		4AF1FD882B9E8879009DC958 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4AF1FD8A2B9E887A009DC958 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AF1FD8D2B9E887A009DC958 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4AF1FDA12B9E8B73009DC958 /* SwiftNetworkingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNetworkingApp.swift; sourceTree = "<group>"; };
+		4AF1FDA32B9E8CEA009DC958 /* CoinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsViewModel.swift; sourceTree = "<group>"; };
+		4AF1FDA62B9E9731009DC958 /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
+		4AF1FDA82B9E9A9F009DC958 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		4AF1FDAA2B9EA197009DC958 /* CoinAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAPIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +59,8 @@
 		4AF1FD852B9E8879009DC958 /* SwiftNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				4AF1FD862B9E8879009DC958 /* SwiftNetworkingApp.swift */,
-				4AF1FD882B9E8879009DC958 /* ContentView.swift */,
+				4AF1FDA12B9E8B73009DC958 /* SwiftNetworkingApp.swift */,
+				4AF1FD982B9E8A18009DC958 /* Core */,
 				4AF1FD8A2B9E887A009DC958 /* Assets.xcassets */,
 				4AF1FD8C2B9E887A009DC958 /* Preview Content */,
 			);
@@ -65,6 +73,58 @@
 				4AF1FD8D2B9E887A009DC958 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4AF1FD982B9E8A18009DC958 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FD992B9E8A22009DC958 /* AllCoins */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		4AF1FD992B9E8A22009DC958 /* AllCoins */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FDA52B9E9720009DC958 /* Service */,
+				4AF1FD9A2B9E8A2C009DC958 /* Model */,
+				4AF1FD9B2B9E8A35009DC958 /* View */,
+				4AF1FD9C2B9E8A3B009DC958 /* ViewModel */,
+			);
+			path = AllCoins;
+			sourceTree = "<group>";
+		};
+		4AF1FD9A2B9E8A2C009DC958 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FDA82B9E9A9F009DC958 /* Coin.swift */,
+				4AF1FDAA2B9EA197009DC958 /* CoinAPIError.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AF1FD9B2B9E8A35009DC958 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FD882B9E8879009DC958 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AF1FD9C2B9E8A3B009DC958 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FDA32B9E8CEA009DC958 /* CoinsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AF1FDA52B9E9720009DC958 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4AF1FDA62B9E9731009DC958 /* CoinDataService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +197,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF1FDAB2B9EA197009DC958 /* CoinAPIError.swift in Sources */,
+				4AF1FDA72B9E9731009DC958 /* CoinDataService.swift in Sources */,
 				4AF1FD892B9E8879009DC958 /* ContentView.swift in Sources */,
-				4AF1FD872B9E8879009DC958 /* SwiftNetworkingApp.swift in Sources */,
+				4AF1FDA42B9E8CEA009DC958 /* CoinsViewModel.swift in Sources */,
+				4AF1FDA92B9E9A9F009DC958 /* Coin.swift in Sources */,
+				4AF1FDA22B9E8B73009DC958 /* SwiftNetworkingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +343,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KariGroszewska.SwiftNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -308,6 +373,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KariGroszewska.SwiftNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
