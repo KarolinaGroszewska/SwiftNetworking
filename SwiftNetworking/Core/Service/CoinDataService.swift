@@ -8,20 +8,46 @@
 import Foundation
 
 struct CoinDataService: HTTPDataDownloader {
+    
+    func fetchCoins() async throws -> [Coin]{
+        guard let endpoint = allCoinsURLString else {
+            throw CoinAPIError.requestFailed(description: "Invalid endpoint")
+        }
+        return try await fetchData(as: [Coin].self, endpoint: endpoint)
+    }
+    
+    func fetchCoinDetails(id: String) async throws -> CoinDetails?{
+        guard let endpoint =  coinDetailsURLString(id: id) else {
+            throw CoinAPIError.requestFailed(description: "Invalid endpoint")
+        }
+        return try await fetchData(as: CoinDetails.self, endpoint: endpoint)
+    }
+
+    
     private var baseURLComponents: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.coingecko.com"
-        components.
-    }
-    func fetchCoins() async throws -> [Coin]{
-        let coinsURLString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=25&locale=en"
-        return try await fetchData(as: [Coin].self, endpoint: coinsURLString)
+        components.path = "/api/v3/coins/"
+        return components
     }
     
-    func fetchCoinDetails(id: String) async throws -> CoinDetails?{
-        let coinDetailsURLString = "https://api.coingecko.com/api/v3/coins/\(id)"
-        return try await fetchData(as: CoinDetails.self, endpoint: coinDetailsURLString)
+    private var allCoinsURLString: String? {
+        var components = baseURLComponents
+        components.path += "markets"
+        components.queryItems = [
+            //TODO: Use enums to add some localization and currency locales
+            .init(name: "vs_currency", value: "usd"),
+            .init(name: "per_page", value: "25"),
+            .init(name: "locale", value: "en")
+        ]
+        return components.url?.absoluteString
+    }
+    
+    private func coinDetailsURLString(id: String) -> String? {
+        var components = baseURLComponents
+        components.path += "\(id)"
+        return components.url?.absoluteString
     }
 
 }

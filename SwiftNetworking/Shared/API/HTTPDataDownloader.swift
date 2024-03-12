@@ -16,13 +16,14 @@ extension HTTPDataDownloader {
             throw CoinAPIError.urlParsingError
         }
         var request = URLRequest(url: url)
-        request.addValue("key", forHTTPHeaderField: "x-cg-demo-api-key")
+        request.httpMethod = "GET"
+        request.setValue(APIKey().key, forHTTPHeaderField: "x-cg-demo-api-key")
         // TODO: work with urlRequest to determine how to add an API key
         //        let urlRequest = URLRequest(url: url)
         //        urlRequest.addValue("API_KEY", forHTTPHeaderField: "x-cg-demo-api-key")
         //        urlRequest.httpMethod = "GET"
         
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw CoinAPIError.requestFailed(description: "Bad HTTP Response")
