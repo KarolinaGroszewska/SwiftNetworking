@@ -6,6 +6,7 @@ SwiftNetworking/Shared/API/APIKey.swift
 
 ## User settings
 xcuserdata/
+UserInterfaceState.xcuserstate
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
