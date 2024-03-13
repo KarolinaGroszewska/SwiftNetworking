@@ -7,9 +7,17 @@
 
 import Foundation
 
-struct CoinDataService: HTTPDataDownloader {
+protocol CoinServiceProtocol {
+    func fetchCoins() async throws -> [Coin]
+    func fetchCoinDetails(id: String) async throws -> CoinDetails?
+}
+
+class CoinDataService: CoinServiceProtocol, HTTPDataDownloader {
+    private var page = 0
+    private let fetchLimit = 25
     
     func fetchCoins() async throws -> [Coin]{
+        page += 1
         guard let endpoint = allCoinsURLString else {
             throw CoinAPIError.requestFailed(description: "Invalid endpoint")
         }
@@ -17,10 +25,13 @@ struct CoinDataService: HTTPDataDownloader {
     }
     
     func fetchCoinDetails(id: String) async throws -> CoinDetails?{
+        if let cached = try CoinDetailsCache.shared.get(forKey: id) { return cached }
         guard let endpoint =  coinDetailsURLString(id: id) else {
             throw CoinAPIError.requestFailed(description: "Invalid endpoint")
         }
-        return try await fetchData(as: CoinDetails.self, endpoint: endpoint)
+        let details = try await fetchData(as: CoinDetails.self, endpoint: endpoint)
+        try CoinDetailsCache.shared.set(details, forKey: id)
+        return details
     }
 
     
@@ -38,7 +49,8 @@ struct CoinDataService: HTTPDataDownloader {
         components.queryItems = [
             //TODO: Use enums to add some localization and currency locales
             .init(name: "vs_currency", value: "usd"),
-            .init(name: "per_page", value: "25"),
+            .init(name: "per_page", value: "\(fetchLimit)"),
+            .init(name: "page", value: "\(page)"),
             .init(name: "locale", value: "en")
         ]
         return components.url?.absoluteString

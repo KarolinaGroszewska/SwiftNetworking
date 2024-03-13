@@ -17,10 +17,8 @@ struct CoinDetails: Codable {
 // TODO: Add localizations
 struct Description: Codable{
     let text: String
-    let frenchText: String
     enum CodingKeys: String, CodingKey {
         case text = "en"
-        case frenchText = "fr"
     }
 }
 

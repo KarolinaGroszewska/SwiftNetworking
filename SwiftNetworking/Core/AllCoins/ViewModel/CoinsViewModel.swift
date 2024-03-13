@@ -8,22 +8,23 @@
 import Foundation
 
 class CoinsViewModel: ObservableObject {
-
+    
     @Published var coins = [Coin]()
     @Published var errorMessage: String?
-    private let service = CoinDataService()
+    @Published var coinDetails: CoinDetails?
     
-    init(){
-        Task {
-            await fetchCoins()
-        }
+    private let service: CoinServiceProtocol
+    
+    init(service: CoinServiceProtocol){
+        self.service = service
+        Task { await fetchCoins() }
     }
-    
-    // NOTE: this is not a throwing function – if something goes wrong, all we need is the `catch` block
+
     @MainActor
     func fetchCoins() async {
         do {
-            self.coins = try await service.fetchCoins()
+            let coins = try await service.fetchCoins()
+            self.coins.append(contentsOf: coins)
         } catch {
             if let error = error as? CoinAPIError {
                 self.errorMessage = error.customDescription
@@ -33,6 +34,33 @@ class CoinsViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func fetchCoinDetails(coinId: String) async {
+        do {
+            try await Task.sleep(seconds: 0.5)
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+        do {
+            let coinDetails = try await service.fetchCoinDetails(id: coinId)
+            self.coinDetails = coinDetails
+        } catch {
+            if let error = error as? CoinAPIError {
+                self.errorMessage = error.customDescription
+            } else {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+}
+
+extension Task where Success == Never, Failure == Never {
+    static func sleep(seconds: Double) async throws {
+        let duration = UInt64(seconds * 1_000_000_000)
+        try await Task.sleep(nanoseconds: duration)
+    }
+}
+
 //    func fetchCoinsWithCompletionHandler(){
 //        service.fetchCoins { [weak self] result in
 //            DispatchQueue.main.async {
@@ -45,4 +73,3 @@ class CoinsViewModel: ObservableObject {
 //            }
 //        }
 //    }
-}

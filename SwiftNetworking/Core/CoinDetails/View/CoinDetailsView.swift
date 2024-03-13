@@ -9,20 +9,19 @@ import SwiftUI
 
 struct CoinDetailsView: View {
     let coin: Coin
-    @ObservedObject var viewModel: CoinDetailsViewModel
+    @EnvironmentObject var viewModel: CoinsViewModel
     
     init(coin: Coin){
         self.coin = coin
-        self.viewModel = CoinDetailsViewModel(coinID: coin.id)
     }
+    
     var body: some View {
         ScrollView{
-            VStack{
+            VStack(alignment: .leading){
                 if let details = viewModel.coinDetails {
                     Text(details.name)
                         .fontWeight(.semibold)
                         .font(.subheadline)
-                    
                     Text(details.id.uppercased())
                         .font(.footnote)
                     //TODO: Parse Links from JSON so they actually display
@@ -34,7 +33,7 @@ struct CoinDetailsView: View {
         }
         .padding()
         .task {
-            await viewModel.fetchCoinDetails()
+            await viewModel.fetchCoinDetails(coinId: coin.id)
         }
     }
 }
